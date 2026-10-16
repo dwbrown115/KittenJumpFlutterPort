@@ -1,0 +1,29 @@
+name: kitten_jump
+description: Reconstruction of the recovered Kitten Jump Christmas 2.1.1 game.
+publish_to: none
+version: 2.1.1+1
+
+environment:
+  sdk: ^3.13.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flame: ^1.38.2
+  flame_audio: ^2.12.2
+  shared_preferences: ^2.5.6
+  sensors_plus: ^7.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/audio/
+    - assets/fonts/

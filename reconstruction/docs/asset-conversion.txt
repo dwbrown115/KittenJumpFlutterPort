@@ -1,0 +1,52 @@
+Kitten Jump Paid Christmas 2.1.1 asset conversion
+
+Source:
+  ../KittenJump-Paid-2.1.1-Christmas-bullate.ipa
+  SHA-256 99cf9a56cb75a3967215b3658272decce94515a20003d132907e456284a4a07a
+  ../Extracted/Payload/KJ2.app
+  Version 2.1.1, com.marksergienko.KittenApp, original minimum iOS 3.0.
+
+The converter checks the IPA hash against analysis/artifact-identity.json and compares all 128 app files byte-for-byte with archive members before and after conversion. It writes only inside reconstruction/assets. The original artifact and extraction are unchanged.
+
+Images:
+  85 PNGs, at original dimensions, converted into assets/images.
+  84 are Apple's CgBI PNG variant: raw DEFLATE, premultiplied BGRA8.
+  PNG CRCs and filtered scanline layout are validated, then color channels are reordered, alpha is unpremultiplied with nearest integer rounding, and standard zlib RGBA8 PNGs are written.
+  These 84 images are noninterlaced; the inherited converter also supports Adam7 and tests every filter and pass.
+  All 84 files have zero maximum channel error after re-premultiplying the converted pixels.
+  butterfly.png is a standard, noninterlaced RGBA16 PNG. Its channels are rounded to RGBA8 with (sample + 128) // 257. The source 16-bit decoded hash and output 8-bit decoded hash are recorded separately; this is explicit quantization, not resampling.
+  Apple ImageIO independently decodes every original and output. Exact decoded channel hashes and dimensions match the manifest for all 85 files (native little-endian RGBA16 is normalized to PNG big-endian channel order).
+  Pillow independently verifies all 85 output pixel hashes and dimensions.
+  Quantization limitations: colors lost in original CgBI premultiplication cannot be recovered; alpha-zero RGB becomes zero. The standard 16-bit PNG is reduced to 8-bit channels for uniform runtime decoding.
+
+Audio:
+  31 .caf effects and 3 .aif music tracks become 34 mono 44.1 kHz PCM signed 16-bit little-endian WAVs in assets/audio.
+  All original audio is Apple IMA4 ADPCM. CAF packet metadata gives valid frames, priming and remainder. AIFC SSND packet count and COMM rate/type are validated.
+  macOS /usr/bin/afconvert performs the conversion without changing channel count or sample rate.
+  An independent Python Apple IMA4 decoder validates every output sample byte against source packet data. It preserves consecutive-packet predictor precision and removes CAF priming/remainder frames using the source metadata. All 34 PCM payload hashes match exactly.
+  GameLoop.wav: 5,580,672 frames, 126.545850 seconds.
+  MenuIntro.wav: 770,880 frames, 17.480272 seconds.
+  MenuLoop.wav: 768,576 frames, 17.428027 seconds.
+  jump00..jump72, butterfly00..butterfly02, butterfly1, butterfly2, menu00, and menu01 retain their original stems as WAV names.
+  Sound selection and loop timing belong to native gameplay/menu evidence, not inferred filename ordering.
+
+Bitmap fonts and atlases:
+  assets/fonts/giant_scores.fnt, small_font.fnt, and white_font.fnt are exact byte copies. Their original MisterEarlC bitmap glyph images are converted under assets/images. No external or system font files are copied.
+  No sprite atlas plist files are present. Sprite rectangles and timing are compiled into the native program.
+  docs/atlas-inventory.json records all major image dimensions and the parsed three BMFont glyph maps.
+  Native setupWithImage evidence from renderer analysis identifies classic_atlas, grey_kitten, red_kitten and siam_kitten cells as 85x80 pixels, 12 columns: x=85*(index%12), y=80*(index//12). Their inspection grids use that evidence; animation frame timing is deliberately not assigned here.
+  Other docs/atlas-inspection PNG grids are 64-pixel coordinate references only. They must not be interpreted as frame or sprite boundaries.
+  docs/assets-preview.png is an inspection contact sheet, excluded from bundled assets.
+
+Tools:
+  python3 tool/convert_assets.py
+  python3 -m unittest discover -s tool -v
+  swift tool/verify_assets.swift '/Users/dakotabrown/Desktop/CodingProjects/KittenJump Christmas 2.1.1'
+  Python with Pillow: tool/preview_assets.py and tool/inventory_atlases.py.
+
+Verification:
+  Eight converter tests pass: known filter/Adam7 pixels, alpha/color channel answers, standard zlib output, corruption rejection, PNG Paeth ties, RGBA16 quantization, known IMA4 packet/continuity samples, invalid IMA4 packet rejection.
+  Native ImageIO source/output pixel checks pass for all 85 images.
+  Pillow pixel and size checks pass for all 85 outputs.
+  Independent IMA4 source-to-PCM checks pass for all 34 WAVs.
+  Second-pass reproducibility result is recorded in docs/asset-verification.txt.

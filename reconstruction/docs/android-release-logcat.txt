@@ -1,0 +1,38 @@
+--------- beginning of main
+10-14 04:17:36.398  3331  3331 I _jump_christmas: Using CollectorTypeCMC GC.
+10-14 04:17:36.400  3331  3331 E _jump_christmas: Not starting debugger since process cannot load the jdwp agent.
+10-14 04:17:36.401  3331  3331 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+10-14 04:17:36.413  3331  3331 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+10-14 04:17:36.413  3331  3331 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+10-14 04:17:36.414  3331  3331 D nativeloader: Configuring clns-9 for other apk /data/app/~~stu7vBNocGaxJ1mpMmM1bQ==/com.silvercastledigital.kitten_jump_christmas-pF8yRqB3KVGN2MLLYAyNiQ==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~stu7vBNocGaxJ1mpMmM1bQ==/com.silvercastledigital.kitten_jump_christmas-pF8yRqB3KVGN2MLLYAyNiQ==/lib/arm64:/data/app/~~stu7vBNocGaxJ1mpMmM1bQ==/com.silvercastledigital.kitten_jump_christmas-pF8yRqB3KVGN2MLLYAyNiQ==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.silvercastledigital.kitten_jump_christmas
+10-14 04:17:36.415  3331  3331 I _jump_christmas: AssetManager2(0xb400007059a144f8) locale list changing from [] to [en-US]
+10-14 04:17:36.418  3331  3331 V GraphicsEnvironment: Currently set values for:
+10-14 04:17:36.418  3331  3331 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+10-14 04:17:36.418  3331  3331 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+10-14 04:17:36.418  3331  3331 V GraphicsEnvironment: com.silvercastledigital.kitten_jump_christmas is not listed in per-application setting
+10-14 04:17:36.418  3331  3331 V GraphicsEnvironment: ANGLE allowlist from config: 
+10-14 04:17:36.418  3331  3331 V GraphicsEnvironment: com.silvercastledigital.kitten_jump_christmas is not listed in ANGLE allowlist or settings, returning default
+10-14 04:17:36.418  3331  3331 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+10-14 04:17:36.448  3331  3331 I _jump_christmas: AssetManager2(0xb400007059a15df8) locale list changing from [] to [en-US]
+--------- beginning of system
+10-14 04:17:36.450  3331  3343 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+10-14 04:17:36.475  3331  3331 E ashmem  : Pinning is deprecated since Android Q. Please use trim or other methods.
+10-14 04:17:36.491  3331  3345 D nativeloader: Load /data/app/~~stu7vBNocGaxJ1mpMmM1bQ==/com.silvercastledigital.kitten_jump_christmas-pF8yRqB3KVGN2MLLYAyNiQ==/base.apk!/lib/arm64-v8a/libflutter.so using class loader ns clns-9 (caller=/data/app/~~stu7vBNocGaxJ1mpMmM1bQ==/com.silvercastledigital.kitten_jump_christmas-pF8yRqB3KVGN2MLLYAyNiQ==/base.apk): ok
+10-14 04:17:36.493  3331  3346 D skia    : [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+10-14 04:17:36.524  3331  3331 I _jump_christmas: AssetManager2(0xb400007059a19638) locale list changing from [] to [en-US]
+10-14 04:17:36.530  3331  3343 I EGL_emulation: Opening libGLESv1_CM_emulation.so
+10-14 04:17:36.530  3331  3343 I EGL_emulation: Opening libGLESv2_emulation.so
+10-14 04:17:36.534  3331  3343 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-14 04:17:36.535  3331  3343 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-14 04:17:36.532  3331  3331 W _jump_christmas: type=1400 audit(0.0:44): avc:  denied  { read } for  name="max_map_count" dev="proc" ino=17265 scontext=u:r:untrusted_app:s0:c154,c256,c512,c768 tcontext=u:object_r:proc_max_map_count:s0 tclass=file permissive=0 app=com.silvercastledigital.kitten_jump_christmas
+10-14 04:17:36.542  3331  3331 D DesktopModeFlags: Toggle override initialized to: OVERRIDE_UNSET
+10-14 04:17:36.595  3331  3331 D nativeloader: Load /data/app/~~stu7vBNocGaxJ1mpMmM1bQ==/com.silvercastledigital.kitten_jump_christmas-pF8yRqB3KVGN2MLLYAyNiQ==/base.apk!/lib/arm64-v8a/libdartjni.so using class loader ns clns-9 (caller=/data/app/~~stu7vBNocGaxJ1mpMmM1bQ==/com.silvercastledigital.kitten_jump_christmas-pF8yRqB3KVGN2MLLYAyNiQ==/base.apk): ok
+10-14 04:17:36.767  3331  3331 D CompatChangeReporter: Compat change id reported: 377864165; UID 10154; state: ENABLED
+10-14 04:17:36.782  3331  3331 W HWUI    : Unknown dataspace 0
+10-14 04:17:36.944  3331  3348 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(104)] Using the Impeller rendering backend (OpenGLES).
+10-14 04:17:36.952  3331  3331 I Choreographer: Skipped 30 frames!  The application may be doing too much work on its main thread.
+10-14 04:17:36.955  3331  3331 I WindowExtensionsImpl: Initializing Window Extensions, vendor API level=9, activity embedding enabled=true
+10-14 04:17:37.469  3331  3331 D WindowLayoutComponentImpl: Register WindowLayoutInfoListener on Context=com.silvercastledigital.kitten_jump_christmas.MainActivity@4f2f671, of which baseContext=android.app.ContextImpl@8f461c4
+10-14 04:17:37.639  3331  3331 D InsetsController: hide(ime(), fromIme=false)
+10-14 04:17:37.639  3331  3331 I ImeTracker: com.silvercastledigital.kitten_jump_christmas:f6d58f3e: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-14 04:17:42.523  3331  3366 D ProfileInstaller: Installing profile for com.silvercastledigital.kitten_jump_christmas

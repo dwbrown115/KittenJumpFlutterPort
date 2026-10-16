@@ -1,0 +1,3 @@
+PRODUCT_NAME = Kitten Jump Christmas
+PRODUCT_BUNDLE_IDENTIFIER = com.silvercastledigital.kittenJumpChristmas
+PRODUCT_COPYRIGHT = Kitten Jump original game by Mark Sergienko. Reconstruction for local testing.

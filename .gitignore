@@ -1,0 +1,32 @@
+# Preserve archival material locally without adding it to Git.
+/*.ipa
+/Extracted/
+/analysis/*
+!/analysis/artifact-identity.json
+
+/reconstruction/assets/images/
+/reconstruction/assets/audio/
+/reconstruction/assets/fonts/
+/reconstruction/android/app/src/main/res/mipmap-*/ic_launcher.png
+/reconstruction/macos/Runner/Assets.xcassets/AppIcon.appiconset/*.png
+
+/reconstruction/docs/screenshots/
+/reconstruction/docs/atlas-inspection/
+/reconstruction/docs/render-previews/
+/reconstruction/docs/assets-preview.png
+/reconstruction/docs/drive-upload*
+*.log
+.DS_Store
+__pycache__/
+*.pyc
+
+# Local credentials and signing material.
+.env
+.env.*
+!.env.example
+*.keystore
+*.jks
+*.p12
+*.pfx
+*.mobileprovision
+key.properties

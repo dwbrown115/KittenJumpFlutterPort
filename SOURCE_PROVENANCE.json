@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "game": "Kitten Jump",
+  "recovered_version": "2.1.1",
+  "original_developer_credit": "Mark Sergienko, as credited by recovered project evidence; current rights ownership not independently established",
+  "archival_source": {
+    "collection_url": "https://archive.org/download/94iOSApps",
+    "metadata_url": "https://archive.org/metadata/94iOSApps",
+    "source_supplied_by": "project maintainer",
+    "checked_on": "2026-10-16",
+    "exact_archive_file_match": true,
+    "archive_filename": "iOS Apps IPAs/usenet/Kitten Jump - Christmas Surprise! 2.1.1-bullate.ipa",
+    "matched_fields": [
+      "size_bytes",
+      "sha1",
+      "md5"
+    ]
+  },
+  "local_artifact": {
+    "filename": "KittenJump-Paid-2.1.1-Christmas-bullate.ipa",
+    "size_bytes": 9225996,
+    "sha256": "99cf9a56cb75a3967215b3658272decce94515a20003d132907e456284a4a07a",
+    "sha1": "56a24596b025dd7b8d1f3164cc3e004f04e132f0",
+    "md5": "27f85ceedd3f42e087a673358cabf9c7"
+  },
+  "source_inventory": "analysis/artifact-identity.json",
+  "asset_manifest": "reconstruction/assets/manifest.json",
+  "rights_note": "Provenance and availability do not establish authorization or grant rights. Original materials and derived resources are excluded from Git and retained locally. See README.md."
+}

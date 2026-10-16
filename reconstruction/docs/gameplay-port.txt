@@ -1,0 +1,94 @@
+Kitten Jump Paid 2.1.1 / Christmas reconstruction — gameplay evidence
+
+Source: Extracted/Payload/KJ2.app/KJ2, ARMv6 Mach-O, SHA-256
+4ba76a63a1b70de61f97bb379b4a8fabb24be0960b93b8917df8e92c3db1c354.
+Original executable was inspected statically, never executed by this analysis.
+
+Evidence provenance
+The REA dossier at ../analysis/decompiled/0xbb64.json has Evidence ID
+ ev_cdd744244c6312e932c6fa0e8f9f80d21f134faf361c486a97716547bec10564.
+Its Ghidra body stops after 62 bytes: Objective-C message sends were incorrectly
+classified as terminal. It does not establish the complete level initializer.
+The root agent repaired returning Objective-C import flow in an ephemeral Ghidra
+project, without changing the source binary. The full supplemental decompilations
+are in ../analysis/recovered/. These are analyst-generated provider output, not
+canonical REA dossiers. Raw independent LLVM assembly is preserved in
+../analysis/disassembly.txt; Objective-C metadata in ../analysis/objc-metadata.txt.
+
+A small offline symbolic interpreter in ../analysis/gameplay/trace_levels.py
+transcribes Levels.init's straight-line constructor. It reads literal words from
+Mach-O segments and logs setter arguments, without loading or running the game.
+The 600+ Objective-C calls and recovered values are retained as
+levels-setter-trace.json and levels-recovered.json. Values were checked against
+supplemental Ghidra selectors, literal data, and native symbol/ivar metadata.
+
+Recovered behavior implemented
+- Director.init (0x1b3c8) sets animationInterval and oldAnimationInterval to the
+  double 0.02 (50 frames per second). GameLayer.resetWithLevel (0x5774) schedules
+  tick: each frame, which invokes DynamicsLayer.updateTimer (0x819c). The port
+  uses a fixed 50 Hz step and does not advance gameplay while paused/inactive.
+- Eight configurations from Levels.init (0xbb64): First Jumps, Falling Leaves,
+  Up to the Skies, Star Wars, Speed of Light, Endless mode, Classic mode, and
+  Christmas Surprise. All image names, dimensions, collision areas, initial
+  placements, difficulty ranges, colors, finite heights and star thresholds are
+  embedded in GameModel.levels. IDs 0–4 have finite endings; IDs 5–7 have the
+  original very large nominal final height, 4,579,704 world pixels.
+- DynamicsLayer.quickReset (0x7154) resets the kitten X and Y, initializes six
+  platforms, camera center (160,240), butterfly count, and jump flags. It does
+  not synchronously run a physics frame. Platform Y spacing is derived from
+  cloudsAbsTop/cloudsAbsBottom/numClouds, with an extra initial spacing only for
+  configurations with nonzero downward drift (CloudsLayer.quickReset 0xa43c).
+- Kitten X eases toward the pointer target by one tenth each frame. Gravity is
+  subtracted from jump speed before advancing world Y. The kitten collision
+  rectangle is 50×22 for IDs0–5 and 45×22 for IDs6–7; the half-width calculation
+  retains integer truncation for the 45-pixel rectangle.
+- First Jumps and Falling Leaves require a descending crossing of a platform's
+  collision top. Other configurations accept overlap during ascent or descent.
+  The platform collision footprint uses each level's area, scale and offsets.
+  Clouds score before collectibles because the platform loop runs first.
+- Cloud.inverted is a horizontal direction flag, not a collision hazard.
+  Star Wars uses atlas variants0–2/3–5 when changing direction at the edges
+  (setRandomFrame 0xa904, invertCloud 0xa288). Other moving platforms bounce or
+  wrap according to level settings. Platform popping has a separate popped
+  flag and popCount; the first animation frame is not skipped. Pop frames
+  advance on the original random >0.5 condition. Recycling (0xac0c) resets
+  position, scale, horizontal speed, and final-height visibility.
+- A missed first jump returns to the ground and can be retried. Returning to
+  the ground after collecting the first platform or butterfly loses the run.
+  Passing finalHeight then descending to the ending height wins the level.
+- Classic and Christmas collectibles add the current score, doubling it.
+  Other levels add 200 times the cumulative explosion/collection count.
+  Butterfly count is retained separately for the recovered three-star
+  thresholds. Christmas starts with the original gift at color0; recycled
+  gifts select one of the three original atlas cells.
+- Tilt uses a float32 filter of 0.3×current accelerationX plus 0.7×previous
+  filtered acceleration, then targetX=320×filter+160, clamped to screen bounds
+  (GameLayer.accelerometer:didAccelerate: 0x3f48). Tilt input runs only airborne.
+
+Reconstruction limits / deliberate choices
+- Random placement uses seeded Dart Random rather than the original BSD random
+  generator, so an identical seed does not reproduce the original trajectory.
+- The principal physics fields use float32 storage. Not every intermediate
+  software-float operation is rounded separately; tiny numerical drift from the
+  original ARM helper call sequence is possible.
+- Supplemental DynamicsLayer decompilation still has PIC/stack alias artifacts
+  around0x9df2. Readable native assembly and selector/literal tables corroborate
+  the implemented branches, but no original-runtime comparison was possible.
+- Classic butterfly pop animation timing, particle explosions, the end-of-level
+  butterfly/star count celebration, and exact original ground idle animation
+  timing are presentation reconstructions rather than runtime-verified matches.
+- Original cumulative star unlocks gate finite levels 1–4; First Jumps, Endless,
+  Classic and Christmas are available immediately. A result must be saved in the
+  modern score form to record its stars. Original saved data/server state is not
+  imported.
+- Physical Android tilt orientation/responsiveness remains to be checked on a
+  phone. The source filter is retained, but host sensor sampling is modern.
+
+Verification
+flutter test test/game_model_test.dart --reporter expanded: 16 tests passed.
+dart analyze lib/game/game_model.dart test/game_model_test.dart: no issues.
+Tests cover level identity/constants, reset placements, exact first-frame
+float32 Christmas motion, first-jump retry and later loss, X easing and tilt,
+rising versus descending collision, Star Wars direction behavior, score order,
+collectible bonuses, camera world coordinates, finite completion/star awards,
+inactive freeze and level selection bounds.

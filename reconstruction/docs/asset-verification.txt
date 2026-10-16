@@ -1,0 +1,6 @@
+Reproducibility: two full conversions produce identical SHA-256 hashes for all 123 asset files (including manifest). Result: PASS
+Original app preservation: 128 app files compare byte-for-byte with IPA before and after each conversion.
+Native ImageIO: PASS, all 85 original/output image pairs.
+Pillow: PASS, all 85 converted image pixel hashes/dimensions.
+Independent Apple IMA4 PCM comparison: PASS, all 34 WAVs.
+Converter tests: PASS, 8 tests.

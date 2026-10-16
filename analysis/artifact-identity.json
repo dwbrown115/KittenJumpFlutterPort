@@ -1,0 +1,30 @@
+{
+  "source_path": "/Volumes/DevDrive/KittenJump/OriginalBuilds/2026-10-14/KittenJump-Paid-2.1.1-Christmas-bullate.ipa",
+  "archive": "/Users/dakotabrown/Desktop/CodingProjects/KittenJump Christmas 2.1.1/KittenJump-Paid-2.1.1-Christmas-bullate.ipa",
+  "sha256": "99cf9a56cb75a3967215b3658272decce94515a20003d132907e456284a4a07a",
+  "source_sha256": "99cf9a56cb75a3967215b3658272decce94515a20003d132907e456284a4a07a",
+  "bytes": 9225996,
+  "app_path": "/Users/dakotabrown/Desktop/CodingProjects/KittenJump Christmas 2.1.1/Extracted/Payload/KJ2.app",
+  "info": {
+    "CFBundleVersion": "2.1.1",
+    "CFBundleIdentifier": "com.marksergienko.KittenApp",
+    "CFBundleIconFile": "Icon.png",
+    "CFBundleExecutable": "KJ2",
+    "UIStatusBarHidden": true,
+    "DTSDKName": "iphoneos3.0",
+    "MinimumOSVersion": "3.0",
+    "CFBundleDevelopmentRegion": "English",
+    "UIPrerenderedIcon": true,
+    "DTPlatformName": "iphoneos",
+    "CFBundleInfoDictionaryVersion": "6.0",
+    "CFBundleResourceSpecification": "ResourceRules.plist",
+    "CFBundleSupportedPlatforms": [
+      "iPhoneOS"
+    ],
+    "CFBundleSignature": "????",
+    "CFBundleDisplayName": "KittenJump",
+    "CFBundlePackageType": "APPL",
+    "LSRequiresIPhoneOS": true,
+    "CFBundleName": "KJ2"
+  }
+}

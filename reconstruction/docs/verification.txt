@@ -1,0 +1,91 @@
+Kitten Jump Christmas 2.1.1 reconstruction: completed verification
+Date: 2026-10-14
+
+Delivered artifacts
+artifacts/KittenJump-Christmas-Android.apk: optimized release, 71,423,859 bytes.
+Android application ID: com.silvercastledigital.kitten_jump_christmas
+Version name2.1.1, version code1; display name Kitten Jump Christmas.
+Contains ARM64, ARMv7 and x86_64 libraries. apksigner verifies APK v2 signing.
+Uses the development signing key for local testing.
+
+artifacts/Kitten Jump Christmas.app: optimized release, Apple silicon+Intel.
+macOS bundle ID: com.silvercastledigital.kittenJumpChristmas
+Version2.1.1, display/executable name Kitten Jump Christmas.
+Local ad hoc signing; codesign --verify --deep --strict passes on both the
+build product and copied delivery bundle. The last Flutter build was release;
+no later debug build changed nested framework signatures.
+
+artifacts/build-manifest.json records hashes, native identities, architectures,
+original IPA hash and final Dart source hashes. Final source/artifact hashes
+were compared again after packaging, installation and launching.
+
+PASS: flutter analyze — No issues found.
+PASS: flutter test --reporter expanded — 39 tests.
+  16 recovered gameplay tests, seven renderer/loop tests, six app flow tests,
+  four store tests, six review regressions. Includes large-text/keyboard layout,
+  full top-strip pause, preference isolation, durability and stale-save races.
+PASS: eight asset converter tests.
+PASS: native ImageIO — every one of85 original/output image pairs verified.
+PASS: independent IMA4 decoder — all34 converted audio PCM payloads verified.
+PASS: two conversions — byte-identical123 generated asset files/manifest.
+PASS: all129 regular extracted files compare byte-for-byte with copied IPA;
+  128 are app files and one is iTunesArtwork. Archive hash also unchanged.
+
+PASS: Android native smoke test on Android36 ARM64 emulator.
+PASS: macOS native smoke test on Apple silicon.
+  Both exercise original artwork loading, all8 modes, three kitten choices,
+  separate music/effects controls, native audio playing/paused state, finger and
+  tilt-selection UI, keyboard steering, pause/resume, loss, local save and replay.
+  Native asynchronous audio state is polled with a15-second bound; playback
+  errors fail the test. The test mocks preferences so QA names/unlocks are not
+  saved into the normal application. Final logs: android-smoke.log/macos-smoke.log.
+  Mac Flutter drive reports its existing integration_test/XCTest forwarding
+  warning and foreground-open warning; its VM driver connects and receives
+  the completed passing Flutter test result from the actual native process.
+
+PASS: optimized Android release APK installed and cold-launched successfully,
+  am start -W Status:ok; its process remains running after launch.
+PASS: older1.3 APK and Christmas2.1.1 release APK installed simultaneously in
+  the same emulator. pm lists both distinct IDs; both launch successfully.
+  Logs: side-by-side-install.txt, android-older-release-launch.txt,
+  android-release-launch.txt. No physical phone was attached.
+PASS: final optimized Mac app opened through native app control. Original
+  Christmas menu is visible with its six accessible actions. The actual release
+  Local scores screen says No scores yet; returning to Main menu succeeds.
+
+Independent visual QA
+The supervisor and review agent inspected the Android menu/settings, every
+level, picker, help, jump, pause, score entry and score list. Source atlas crops,
+kitten/platform artwork and text are coherent; no missing/cropped controls.
+Native screenshots are saved in docs/screenshots/. Eight320x480 renderer
+previews also exercise the supplied bitmap font; their extra Score:123 text
+is a test overlay, absent from the runtime.
+
+Delivery gate for modern controls
+PASS direction: original paid Christmas art/layout defines the game's identity;
+  ENERGY2/RHYTHM1/MOTION3 reflect the compact portrait layout and gameplay.
+PASS assets: source art/audio reused; no replacement illustrations generated.
+PASS hierarchy/readability: focused controls, explicit selected/off states,
+  dark text on pale panels, original bitmap menu/HUD lettering retained.
+PASS input/accessibility: accessible labels and activation, visible keyboard
+  focus, touch controls, keyboard steering/pause, full source top pause strip.
+PASS resilience: artwork error/retry, optional audio failure, empty scores,
+  malformed persisted records, save failures, small/wide/large-text layouts.
+Original bitmap artwork is preserved; this is not a contrast certification
+of every historical pixel. Modern score/settings/help panels intentionally use
+platform text and accessible controls.
+
+Limits
+Original ARMv6 game not run as a comparison oracle. RNG sequences, every
+intermediate software-float operation, original particle/firework effects and
+some menu/end-screen choreography are not identical reconstructions. Source
+geometry, rules and constants are static observations; tests do not establish
+complete original-runtime equivalence. Physical Android tilt still needs
+checking on a phone. Intel Mac and other Android ABIs were built but runtime
+verification used Apple silicon and ARM64 respectively. No store upload.
+
+Preservation and cleanup
+Original DevDrive IPA and copied extraction unchanged. Older project/remake
+unchanged. Temporary QA emulator was stopped and its task-created AVD deleted.
+REA native session was exported and closed; supplemental Ghidra projects used
+-deleteProject and retained only reproducible reports/scripts.

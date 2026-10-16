@@ -1,0 +1,8 @@
+Starting: Intent { cmp=com.silvercastledigital.kitten_jump_christmas/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.silvercastledigital.kitten_jump_christmas/.MainActivity
+TotalTime: 1262
+WaitTime: 1263
+Complete
+3331

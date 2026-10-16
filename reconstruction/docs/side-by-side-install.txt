@@ -1,0 +1,6 @@
+Performing Streamed Install
+Success
+Performing Streamed Install
+Success
+package:com.silvercastledigital.kitten_jump
+package:com.silvercastledigital.kitten_jump_christmas

@@ -1,0 +1,100 @@
+Kitten Jump Paid 2.1.1 Christmas renderer
+
+Source: Extracted/Payload/KJ2.app/KJ2, SHA-256
+4ba76a63a1b70de61f97bb379b4a8fabb24be0960b93b8917df8e92c3db1c354
+
+Evidence boundary
+The original ARM app was not executed. Geometry and animation claims below
+come from shipped pixels, source-bound native assembly and the supplemental
+Ghidra dossiers under ../analysis/recovered. Those dossiers restore returning
+Objective-C call flow that the initial REA decompiler result truncated; they
+are analyst-restored static analysis, not canonical REA or runtime evidence.
+All converted pixels are independently verified by the asset conversion work.
+
+Recovered presentation
+- Original 320 x 480 portrait coordinates, with positive world Y upward.
+  Canvas maps (x, y - cameraY) to (x, 480 - (y - cameraY)). Wider/taller screens
+  preserve aspect ratio and letterbox; original assets remain proportioned.
+- Native Director.init at 0x1b3c8 initializes animationInterval to 0.02 seconds.
+  AppDelegate at 0x215c does not override it. Gameplay and renderer decorations
+  use fixed 50 Hz steps; display refresh may differ.
+- The menu composes main_menu.png over menu_bg.png. Its 1 x 960 gradient is
+  positioned at native center Y=480, so only source Y=480..959 is visible.
+- KittenLayer.setupWithImage at 0x331c uses 85 x 80 cells and 12 columns in all
+  kitten atlases. Its child sprite is centered at local (0,20).
+  Classic: jump cells 0..34 at .03 s, fall cell 35, run 36..54 at .03 s,
+  sit 55..60 at .04 s, resting cell 61.
+  Other kittens: jump 0..44 at .03 s, fall 39..44 looping at .04 s,
+  run 45..66 at .03 s, sit 67..72 at .08 s, then resting cell 72.
+  Sitting schedules licking after a one-second delay; original start-lick
+  and subsequent lick frame lists are rebuilt from the same function.
+- DynamicsLayer.resetWithLevel at 0x7478 forces classic_atlas.png in Classic
+  mode and winter_level_atlas.png in Christmas Surprise. Other levels use
+  the selected red, grey or Siamese kitten atlas.
+- CloudsLayer.setFrameNo at 0xa300 computes frame rectangles from each level's
+  width, height, atlas width and start offset. LevelSettings data, rather than
+  visual guesses or connected alpha bounds, selects all platform crops.
+  Cloud.inverted governs movement; Star Wars frame variants already carry
+  their corresponding artwork. Renderer does not mirror these frames again.
+- BackgroundNode.resetWithLevel/quickReset at 0x6a64/0x68a0 supplies wall/tree
+  tiles, 320 x 480 with 22 pixels overlap, chosen from the first three cells.
+  DynamicsLayer only installs this repeating background in levels 0 and 1.
+- The platform, kitten, foreground and collectible order follows DynamicsLayer
+  child z values. Ground back and ending sprites use original per-level
+  positions. Ground front is present only in levels 0,5,6,7.
+- Cocos2d rotation is clockwise in the displayed view. Native sprite rotation
+  therefore maps to positive Canvas rotation, unlike the old OpenGL build.
+- FarBackground.resetWithLevel/update at 0xf78a/0xeb20 gives background clouds
+  for levels 1,2,5; Earth and Galaxy for levels 3/4; stars for levels 3,4,6,7.
+  Original parallax divisors, frame regions, drifting/wrapping and opacity
+  transitions are reused. Classic rainbow, sun and plane are cut from
+  classic_atlas.png. Christmas moon uses rect (321,881,130,130).
+- Classic comet starts at the recovered 33000-height trigger, with successive
+  2500-height targets and local Y motion of 8 units per simulation step. Its
+  original parent/child rotation and position transform are reproduced.
+- ButterflyLayer.resetWithLevel at 0x10b88 and setColor at 0x109f8 supply
+  50 x 50 butterfly cells: blue 0..5, green 6..11, red 12..17. Classic
+  butterflies use eight cells at atlas Y=551. Christmas gifts use rect
+  (868 + variant*40,801,40,53), matching resetButterfly at 0x7b90.
+- HUD digits use original fps_font1.png cells, 10 x 24 starting at ASCII comma.
+  Score sits at (10,450); counter art at (145,460), count at (160,450);
+  pause art at (300,460). Finite levels retain the original progress frame
+  and fill at Y=440. GameLayer reset/show-counter/tick: 0x5774,0x548c,0x5578.
+- The three supplied BMFont .fnt files are parsed with original glyph rectangles,
+  offsets, advances and line heights. drawOriginalText exposes these bitmap
+  glyphs without substituting system typefaces. The main HUD is a LabelAtlas
+  in the native binary and is kept as its original image cells.
+- Original finger/tilt instruction overlays appear while grounded in tutorial
+  and Endless levels. Modern keyboard/control help and accessible interactions
+  are supplied by the Flutter UI owned by the supervising agent.
+
+Deliberate port choices and remaining differences
+- Dart seeded random numbers make tests repeatable; scenery placement is not
+  expected to match the original BSD random sequence. Native tile recycling
+  is represented with periodic copies of its three source frame selections.
+- The reconstruction caps elapsed time at .25 s and advances at most eight
+  simulation steps per rendered update, dropping excess backlog. Pause and
+  inactive scenes clear the accumulator. This prevents a long background
+  interval from jumping the player ahead unexpectedly.
+- Converted images use Flutter low-quality filtering (linear sampling). Original
+  Cocos texture blending/filtering may differ slightly at scaled window sizes.
+- Original particle-system bursts/fireworks and some score/menu transition
+  actions are not reconstructed in this renderer. Their shipped texture assets
+  remain bundled. Physics, score recording and level completion work separately.
+- The exact original runtime timing, particle appearance and complete end-screen
+  choreography remain unverified; static analysis is not a side-by-side play test.
+
+Validation
+flutter analyze lib/game/kitten_jump_game.dart test/game_loop_test.dart:
+No issues found.
+flutter test test/game_loop_test.dart --reporter expanded:
+Seven tests passed: fixed trajectories across 30/60/120 display refresh,
+bounded resume interval, frozen pause and cleared remainder, unloaded/inactive
+states, invalid timing samples, atlas bounds, and raster rendering all eight
+levels plus a supplied bitmap font. Every one of the 85 bundled PNGs decoded.
+
+Eight 320 x 480 renderer previews are in docs/render-previews/level-N.png.
+The "Score: 123" line in those previews is a bitmap-font test overlay only;
+it is not present in the shipped game renderer. Early Christmas, Classic and
+levels 0..4 previews were visually inspected. Final native UI verification and
+release packaging are performed by the supervising agent.
